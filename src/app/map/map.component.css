@@ -1,0 +1,5 @@
+#mapid {
+    height: calc(100% - 44px);
+    width: 100%;
+    position: absolute !important;
+ }
