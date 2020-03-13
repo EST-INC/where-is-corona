@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import * as L from 'leaflet';
+import polandBoundaries from '../../assets/poland-boundaries.json';
 
 @Component({
   selector: 'app-map',
@@ -19,7 +20,7 @@ export class MapComponent implements OnInit {
       center: [this.latitude, this.longitude],
       zoom: 20
     });
-    // Inits map layer from Open Street Map
+    // inits map layer from Open Street Map
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 19,
       attribution: '&copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap contributors</a>'
@@ -30,8 +31,11 @@ export class MapComponent implements OnInit {
 
     // show a marker on the map
     L.marker({ lat: this.latitude, lon: this.longitude }, { icon: this.getMarkerIcon() })
-        .bindPopup('Jaskinia gargamela')
-        .addTo(this.mymap);
+      .bindPopup('Jaskinia gargamela')
+      .addTo(this.mymap);
+    
+    // adds poland boundaries to map
+    L.geoJSON(polandBoundaries).addTo(this.mymap);
   }
 
   private getMarkerIcon() {
