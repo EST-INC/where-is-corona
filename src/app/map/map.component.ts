@@ -13,33 +13,77 @@ import { MapModel } from './map.model';
 export class MapComponent implements OnInit {
 
   private mymap: any;
-  private longitude = 18.624834;
-  private latitude = 54.350120;
+  private longitude = 19.42367222;
+  private latitude = 52.11416667;
 
-  mapModel: MapModel;
+  mapModel: MapModel[];
 
-  constructor(private mapService: MapService) { }
+  constructor(private mapService: MapService) {
+  }
 
   ngOnInit(): void {
-    this.mymap = L.map('mapid', {
-      center: [this.latitude, this.longitude],
-      zoom: 15
+    this.mapService.getMapInformation().subscribe(data => {
+      this.mapModel = data;
+
+      this.setMapBasics();
+      // inits map layer from Open Street Map
+      this.setMapTile();
+      // adds poland boundaries to map
+      this.setPolishBoundaries(data);
     });
-    // inits map layer from Open Street Map
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      maxZoom: 19,
-      attribution: '&copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap contributors</a>'
+  }
+
+  private setPolishBoundaries(data: MapModel[]) {
+    L.geoJSON(polandBoundaries, {
+      style(feature) {
+        const infections = data.find(x => x.boundaryId === feature.properties.id);
+        const numberOfInfected = infections !== undefined ? infections.infectedPeople : 0;
+        return {
+          fillColor: numberOfInfected > 1000 ? '#800026' :
+            numberOfInfected > 35 ? '#BD0026' :
+              numberOfInfected > 30 ? '#E31A1C' :
+                numberOfInfected > 25 ? '#FC4E2A' :
+                  numberOfInfected > 15 ? '#FD8D3C' :
+                    numberOfInfected > 10 ? '#FEB24C' :
+                      numberOfInfected > 5 ? '#FED976' :
+                        '#228B22',
+          weight: 2,
+          opacity: 2,
+          color: 'white',
+          dashArray: '2',
+          fillOpacity: 1
+        };
+      }
     }).addTo(this.mymap);
 
-    // show the scale bar on the lower left corner
-    L.control.scale().addTo(this.mymap);
+    this.blockInteraction();
+  }
 
-    // adds poland boundaries to map
-    L.geoJSON(polandBoundaries).addTo(this.mymap);
+  private blockInteraction() {
+    this.mymap.dragging.disable();
+    this.mymap.touchZoom.disable();
+    this.mymap.doubleClickZoom.disable();
+    this.mymap.scrollWheelZoom.disable();
+    this.mymap.boxZoom.disable();
+    this.mymap.keyboard.disable();
+    if (this.mymap.tap) {
+      this.mymap.tap.disable();
+    }
+    document.getElementById('mymap').style.cursor = 'default';
+  }
 
-    this.mapService.getMapInformation().subscribe(data => {
-      console.log(data);
-      this.mapModel = data;
+  private setMapBasics() {
+    this.mymap = L.map('mapid', {
+      center: [this.latitude, this.longitude],
+      zoom: 7
     });
+  }
+
+  private setMapTile() {
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 7,
+      minZoom: 7,
+      attribution: '&copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap contributors</a>'
+    }).addTo(this.mymap);
   }
 }
