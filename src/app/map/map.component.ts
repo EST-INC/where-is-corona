@@ -11,8 +11,8 @@ import { MapService } from './map.service';
 export class MapComponent implements OnInit {
 
   private mymap: any;
-  private longitude = 18.624834;
-  private latitude = 54.350120;
+  private longitude = 19.42367222;
+  private latitude = 52.11416667;
 
   helloText: string;
 
@@ -21,7 +21,7 @@ export class MapComponent implements OnInit {
   ngOnInit(): void {
     this.mymap = L.map('mapid', {
       center: [this.latitude, this.longitude],
-      zoom: 15
+      zoom: 6.3
     });
     // inits map layer from Open Street Map
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
