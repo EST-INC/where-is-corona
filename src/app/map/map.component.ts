@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import * as L from 'leaflet';
 import polandBoundaries from '../../assets/poland-boundaries.json';
+import { MapService } from './map.service';
 
 @Component({
   selector: 'app-map',
@@ -13,7 +14,9 @@ export class MapComponent implements OnInit {
   private longitude = 18.624834;
   private latitude = 54.350120;
 
-  constructor() { }
+  helloText: string;
+
+  constructor(private mapService: MapService) { }
 
   ngOnInit(): void {
     this.mymap = L.map('mapid', {
@@ -31,5 +34,7 @@ export class MapComponent implements OnInit {
 
     // adds poland boundaries to map
     L.geoJSON(polandBoundaries).addTo(this.mymap);
+
+    this.mapService.getMap().subscribe(data => this.helloText = data);
   }
 }
