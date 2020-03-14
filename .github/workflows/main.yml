@@ -26,7 +26,6 @@ jobs:
     - name: Build
       run: |
         npm install
-        npm build --prod
         npm run start
 
     # Firebase deploy
