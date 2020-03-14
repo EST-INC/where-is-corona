@@ -26,7 +26,10 @@ jobs:
     - name: Build
       run: |
         npm install
-        npm run build
+        ng build --prod
+        cd dist;
+        find . -type f -exec sed -i 's~\$BACKEND_URL~${{secrets.API_TOKEN}}' {} \;
+        npm run
 
     # Firebase deploy
     - name: Firebase deploy
