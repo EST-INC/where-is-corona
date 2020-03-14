@@ -14,8 +14,8 @@ import { IfStmt, ThrowStmt } from '@angular/compiler';
 export class MapComponent implements OnInit {
 
   private mymap: any;
-  private longitude = 19.42367222;
-  private latitude = 52.11416667;
+  private longitude = 19.12367222;
+  private latitude = 51.82416667;
 
   mapModel: MapModel[];
 
@@ -76,7 +76,7 @@ export class MapComponent implements OnInit {
   private setMapBasics() {
     this.mymap = L.map('mapid', {
       center: [this.latitude, this.longitude],
-      zoom: 5
+      zoom: 7
 
     });
   }

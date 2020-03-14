@@ -18,5 +18,6 @@ mat-toolbar{
   justify-content: center;
   overflow: hidden;
   width: auto;
-  max-width: 800px;
+  max-width: 930px;
+  max-height: 85vh;
 }
