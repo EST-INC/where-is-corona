@@ -1,15 +1,19 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
+import { MapModel } from './map.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MapService {
 
-  constructor(private http: HttpClient) { }
+  private baseUrl;
+  constructor(private http: HttpClient) {
+    this.baseUrl = environment.$BACKEND_URL + '/infection';
+  }
 
-  getMap() {
-    return this.http.get<string>(environment.$BACKEND_URL);
+  getMapInformation() {
+    return this.http.get<MapModel>(this.baseUrl);
   }
 }
