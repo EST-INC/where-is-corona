@@ -1,0 +1,22 @@
+@import '@angular/material/prebuilt-themes/deeppurple-amber.css';
+
+span{
+  width:auto;
+  float: right;
+  font-family: "Century Gothic";
+  font-variant: all-petite-caps;
+  font-size: 2em;
+  font-weight: bold;
+}
+mat-toolbar{
+  margin-bottom: 0;
+}
+#map{
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  justify-content: center;
+  overflow: hidden;
+  width: auto;
+  max-width: 800px;
+}
