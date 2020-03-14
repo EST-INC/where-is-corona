@@ -4,6 +4,7 @@ import polandBoundaries from '../../assets/poland-boundaries.json';
 import { MapService } from './map.service';
 import { Observable } from 'rxjs';
 import { MapModel } from './map.model';
+import { IfStmt, ThrowStmt } from '@angular/compiler';
 
 @Component({
   selector: 'app-map',
@@ -37,7 +38,7 @@ export class MapComponent implements OnInit {
     L.geoJSON(polandBoundaries, {
       style(feature) {
         const infections = data.find(x => x.boundaryId === feature.properties.id);
-        const numberOfInfected = infections !== undefined ? infections.infectedPeople : 0;
+        const numberOfInfected = infections !== undefined ? infections.totalInfectedPeople : 0;
         return {
           fillColor: numberOfInfected > 1000 ? '#800026' :
             numberOfInfected > 35 ? '#BD0026' :
@@ -60,8 +61,8 @@ export class MapComponent implements OnInit {
   }
 
   private blockInteraction() {
-    this.mymap.dragging.disable();
-    this.mymap.touchZoom.disable();
+    this.mymap.dragging.enable();
+    this.mymap.touchZoom.enable();
     this.mymap.doubleClickZoom.disable();
     this.mymap.scrollWheelZoom.disable();
     this.mymap.boxZoom.disable();
@@ -75,16 +76,16 @@ export class MapComponent implements OnInit {
   private setMapBasics() {
     this.mymap = L.map('mapid', {
       center: [this.latitude, this.longitude],
-      zoom: 7
+      zoom: 5
 
     });
   }
 
   private setMapTile() {
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      maxZoom: 7,
-      minZoom: 7,
-      attribution: '&copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap contributors</a>'
+    L.tileLayer('empty', {
+      // maxZoom: 5.5,
+      minZoom: 5.5,
+      attribution: 'EST Map'
     }).addTo(this.mymap);
   }
 }
