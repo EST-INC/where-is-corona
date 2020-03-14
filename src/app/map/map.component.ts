@@ -52,7 +52,7 @@ export class MapComponent implements OnInit {
           opacity: 2,
           color: 'white',
           dashArray: '2',
-          fillOpacity: 1
+          fillOpacity: 0.5
         };
       }
     }).addTo(this.mymap);
@@ -80,6 +80,7 @@ export class MapComponent implements OnInit {
 
     });
   }
+
 
   private setMapTile() {
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
