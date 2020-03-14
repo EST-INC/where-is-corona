@@ -82,10 +82,10 @@ export class MapComponent implements OnInit {
   }
 
   private setMapTile() {
-    L.tileLayer('empty', {
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       // maxZoom: 5.5,
       minZoom: 5.5,
-      attribution: 'EST Map'
+      attribution: '&copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap contributors</a>'
     }).addTo(this.mymap);
   }
 }
