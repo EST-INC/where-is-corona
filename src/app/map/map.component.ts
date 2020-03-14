@@ -40,13 +40,13 @@ export class MapComponent implements OnInit {
         const infections = data.find(x => x.boundaryId === feature.properties.id);
         const numberOfInfected = infections !== undefined ? infections.totalInfectedPeople : 0;
         return {
-          fillColor: numberOfInfected > 1000 ? '#800026' :
-            numberOfInfected > 35 ? '#BD0026' :
-              numberOfInfected > 30 ? '#E31A1C' :
-                numberOfInfected > 25 ? '#FC4E2A' :
-                  numberOfInfected > 15 ? '#FD8D3C' :
-                    numberOfInfected > 10 ? '#FEB24C' :
-                      numberOfInfected > 5 ? '#FED976' :
+          fillColor: numberOfInfected > 12 ? '#800026' :
+            numberOfInfected > 11 ? '#BD0026' :
+              numberOfInfected > 7 ? '#E31A1C' :
+                numberOfInfected > 5 ? '#FC4E2A' :
+                  numberOfInfected > 3 ? '#FD8D3C' :
+                    numberOfInfected > 2 ? '#FEB24C' :
+                      numberOfInfected > 1 ? '#FED976' :
                         '#228B22',
           weight: 2,
           opacity: 2,
@@ -63,12 +63,12 @@ export class MapComponent implements OnInit {
   private blockInteraction() {
     this.mymap.dragging.enable();
     this.mymap.touchZoom.enable();
-    this.mymap.doubleClickZoom.disable();
-    this.mymap.scrollWheelZoom.disable();
-    this.mymap.boxZoom.disable();
-    this.mymap.keyboard.disable();
+    this.mymap.doubleClickZoom.enable();
+    this.mymap.scrollWheelZoom.enable();
+    this.mymap.boxZoom.enable();
+    this.mymap.keyboard.enable();
     if (this.mymap.tap) {
-      this.mymap.tap.disable();
+      this.mymap.tap.enable();
     }
     document.getElementById('mymap').style.cursor = 'default';
   }

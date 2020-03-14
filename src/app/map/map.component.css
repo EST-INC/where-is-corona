@@ -1,10 +1,4 @@
-:host{
-  display: block;
-  width: 800px;
-}
+
 #mapid {
-  display: block;
     height: calc(100% - 44px);
-    width: inherit;
-    position: absolute !important;
  }
