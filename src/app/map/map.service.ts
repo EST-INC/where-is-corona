@@ -10,7 +10,7 @@ export class MapService {
 
   private baseUrl;
   constructor(private http: HttpClient) {
-    this.baseUrl = environment.$BACKEND_URL + '/infection';
+    this.baseUrl = environment.$BACKEND_URL + '/api/infection';
   }
 
   getMapInformation() {
