@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  $BACKEND_URL: 'https://localhost:8080/actuator/info'
+  $BACKEND_URL: 'http://localhost:8080/actuator/info'
 };
 
 /*
