@@ -10,13 +10,13 @@ import { Observable, throwError } from 'rxjs';
 })
 export class MapService {
 
-  private baseUrl;
+  baseUrl;
   constructor(private http: HttpClient) {
     this.baseUrl = environment.$BACKEND_URL + '/api/infection';
   }
 
   getMapInformation() {
-    return this.http.get<MapModel[]>(this.baseUrl).pipe(retry(1), catchError(this.errorHandle));
+    return this.http.get<MapModel[]>(this.baseUrl);
   }
 
   errorHandle(error) {

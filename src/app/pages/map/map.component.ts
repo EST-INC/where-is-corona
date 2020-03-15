@@ -5,6 +5,9 @@ import {MapService} from '../../core/services/map.service';
 import {Observable} from 'rxjs';
 import {MapModel} from '../../core/models/map.model';
 import {IfStmt, ThrowStmt} from '@angular/compiler';
+import {first} from 'rxjs/operators';
+
+declare function highlightFeature(layer): void;
 
 @Component({
   selector: 'app-map',
@@ -17,22 +20,38 @@ export class MapComponent implements OnInit {
   private longitude = 19.42367222;
   private latitude = 52.11416667;
 
-  mapModel: MapModel[];
+  public mapModel: MapModel[] = [];
 
   constructor(private mapService: MapService) {
   }
 
   ngOnInit(): void {
-    this.mapService.getMapInformation().subscribe(data => {
+    this.mapService.getMapInformation().pipe(first()).subscribe(data => {
       this.mapModel = data;
-
+      console.log(this.mapModel);
       this.setMapBasics();
-      // inits map layer from Open Street Map
       this.setMapTile();
-      // adds poland boundaries to map
       this.setPolishBoundaries(data);
     });
   }
+
+  private onEachFeature(feature, layer) {
+    layer.on({
+      mouseover: function() {
+        this.super.fire(layer);
+      },
+    });
+
+  }
+
+  public fire(layer: any){
+    layer.options.weight = 5;
+    layer.options.opacity = 10;
+    // this.infoo = layer.
+    console.log(layer);
+    console.log(this.mapModel);
+  }
+
 
   private setPolishBoundaries(data: MapModel[]) {
     L.geoJSON(polandBoundaries, {
@@ -47,14 +66,15 @@ export class MapComponent implements OnInit {
                   numberOfInfected > 3 ? '#FD8D3C' :
                     numberOfInfected > 2 ? '#FEB24C' :
                       numberOfInfected > 1 ? '#FED976' :
-                        '#228B22',
+                        'rgba(34,139,34,0.5)',
           weight: 2,
           opacity: 2,
           color: 'white',
           dashArray: '2',
           fillOpacity: 0.5
         };
-      }
+      },
+      onEachFeature: this.onEachFeature
     }).addTo(this.mymap);
 
     this.blockInteraction();
@@ -70,7 +90,8 @@ export class MapComponent implements OnInit {
     if (this.mymap.tap) {
       this.mymap.tap.enable();
     }
-    document.getElementById('mymap').style.cursor = 'default';
+    // todo - to nigdy nie dzialalo, a nawet psulo
+    //document.getElementById('mymap').style.cursor = 'default';
   }
 
   private setMapBasics() {
