@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import * as L from 'leaflet';
-import polandBoundaries from '../../assets/poland-boundaries.json';
-import { MapService } from './map.service';
-import { Observable } from 'rxjs';
-import { MapModel } from './map.model';
-import { IfStmt, ThrowStmt } from '@angular/compiler';
+import polandBoundaries from '../../../assets/poland-boundaries.json';
+import {MapService} from '../../core/services/map.service';
+import {Observable} from 'rxjs';
+import {MapModel} from '../../core/models/map.model';
+import {IfStmt, ThrowStmt} from '@angular/compiler';
 
 @Component({
   selector: 'app-map',

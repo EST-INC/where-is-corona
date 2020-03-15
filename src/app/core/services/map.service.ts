@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../../environments/environment';
-import { MapModel } from './map.model';
+import { environment } from '../../../environments/environment';
+import { MapModel } from '../models/map.model';
 import { retry, catchError } from 'rxjs/operators';
 import { Observable, throwError } from 'rxjs';
 
@@ -16,10 +16,10 @@ export class MapService {
   }
 
   getMapInformation() {
-    return this.http.get<MapModel[]>(this.baseUrl).pipe(retry(1), catchError(this.errorHandl));
+    return this.http.get<MapModel[]>(this.baseUrl).pipe(retry(1), catchError(this.errorHandle));
   }
 
-  errorHandl(error) {
+  errorHandle(error) {
     let errorMessage = '';
     if (error.error instanceof ErrorEvent) {
       // Get client-side error
