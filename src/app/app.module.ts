@@ -9,6 +9,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import { IntervalService } from './core/services/interval.service';
+import { LeafletModule } from '@asymmetrik/ngx-leaflet';
+import {LeafletDemoModule} from './pages/demo/leaflet/leaflet-demo.module';
 
 @NgModule({
   declarations: [
@@ -20,7 +22,9 @@ import { IntervalService } from './core/services/interval.service';
     AppRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    MatToolbarModule
+    MatToolbarModule,
+    LeafletModule.forRoot(),
+    LeafletDemoModule
   ],
   providers: [MapService, IntervalService],
   bootstrap: [AppComponent]
